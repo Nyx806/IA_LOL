@@ -6,16 +6,16 @@ function setTheme(theme) {
     // Appliquer le nouveau thème
     if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.style.setProperty('--background-color', '#121212');
+        document.documentElement.style.setProperty('--text-color', '#ffffff');
     } else {
         document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.style.setProperty('--background-color', '#ffffff');
+        document.documentElement.style.setProperty('--text-color', '#1a1a1a');
     }
     
     // Sauvegarder le thème
     localStorage.setItem('theme', theme);
-    
-    // Mettre à jour les couleurs du body
-    document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-    document.body.style.color = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
 }
 
 // Fonction pour basculer le thème
