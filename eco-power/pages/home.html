@@ -3,28 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éco-Power</title>
+    <title>Éco-Power - Accueil</title>
     <link rel="stylesheet" href="../css/home-styles.css">
-    <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" href="../asset/img/icon.png" type="image/x-icon">
     <style>
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            padding: 4rem 2rem;
+            max-width: var(--max-width);
             margin: 0 auto;
+            background-color: var(--dark-color-light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-strong);
+            width: 90%;
+        }
+
+        .gallery h2 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow-strong);
             border: 1px solid var(--primary-color);
-            background-color: var(--dark-color-light);
-            transition: transform 0.3s ease;
+            background-color: var(--dark-color);
+            transition: var(--transition);
+            margin-bottom: 2rem;
         }
 
         .gallery-item:hover {
@@ -33,7 +46,7 @@
 
         .gallery-item img {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
             display: block;
         }
@@ -44,7 +57,7 @@
             left: 0;
             right: 0;
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            padding: 1rem;
+            padding: 2rem;
             color: var(--text-color);
         }
 
@@ -52,24 +65,28 @@
             margin: 0;
             color: var(--primary-color);
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .gallery-item p {
-            margin: 0.5rem 0 0;
-            font-size: 0.9rem;
+            margin: 1rem 0 0;
+            font-size: 1.1rem;
             color: var(--text-color-light);
+            line-height: 1.6;
         }
 
         .cta-button {
             display: inline-block;
             background-color: var(--primary-color);
             color: var(--text-on-dark);
-            padding: 1rem 2rem;
-            border-radius: 5px;
+            padding: 1.5rem 3rem;
+            border-radius: var(--border-radius);
             text-decoration: none;
             font-weight: 600;
-            margin: 2rem auto;
-            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            margin: 3rem auto;
+            transition: var(--transition);
             border: 2px solid var(--primary-color);
         }
 
@@ -81,10 +98,11 @@
 
         .cta-container {
             text-align: center;
-            padding: 2rem;
+            padding: 4rem 2rem;
             background-color: var(--dark-color-light);
             border-top: 2px solid var(--primary-color);
             border-bottom: 2px solid var(--primary-color);
+            margin: 3rem 0;
         }
 
         .hero-section {
@@ -93,37 +111,66 @@
             background-position: center;
             color: var(--text-color);
             text-align: center;
-            padding: 4rem 2rem;
-            margin-bottom: 2rem;
+            padding: 8rem 2rem;
+            margin: 4rem auto;
+            max-width: 1200px;
+            width: 90%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-strong);
         }
 
         .hero-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 2rem;
             color: var(--primary-color);
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .hero-section p {
-            font-size: 1.2rem;
-            max-width: 600px;
+            font-size: 1.4rem;
+            max-width: 800px;
             margin: 0 auto;
             color: var(--text-color);
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            line-height: 1.8;
         }
 
         @media (max-width: 768px) {
             .gallery {
                 grid-template-columns: 1fr;
-                padding: 1rem;
+                padding: 2rem 1rem;
+                gap: 2rem;
+            }
+
+            .gallery-item {
+                margin-bottom: 1rem;
+            }
+
+            .gallery-item img {
+                height: 300px;
+            }
+
+            .hero-section {
+                padding: 6rem 1rem;
             }
 
             .hero-section h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                margin-bottom: 1.5rem;
             }
 
             .hero-section p {
-                font-size: 1rem;
+                font-size: 1.2rem;
+            }
+
+            .cta-container {
+                padding: 3rem 1rem;
+            }
+
+            .cta-button {
+                padding: 1.2rem 2.5rem;
+                font-size: 1.1rem;
+                margin: 2rem auto;
             }
         }
     </style>
@@ -145,8 +192,8 @@
     <nav>
         <div class="nav-container">
             <ul>
-                <li><a href="home.html">Accueil</a></li>
-                <li><a href="index.html">Calculateur</a></li>
+                <li><a href="home.html" class="active">Accueil</a></li>
+                <li><a href="../index.html">Calculateur</a></li>
             </ul>
         </div>
     </nav>
@@ -158,6 +205,7 @@
         </section>
 
         <section class="gallery">
+            <h2>Nos Solutions Énergétiques</h2>
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Énergie renouvelable">
                 <div class="overlay">
