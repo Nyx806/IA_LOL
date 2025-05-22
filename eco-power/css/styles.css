@@ -9,22 +9,31 @@
     --dark-color-light: #2d2d2d;
     --light-color: #121212;
     --light-color-dark: #1e1e1e;
-    --text-color: #ffffff;
-    --text-color-light: #b3b3b3;
+    --text-color: #2c3e50;
+    --text-color-light: #34495e;
     --text-on-dark: #ffffff;
-    --text-on-light: #ffffff;
+    --text-on-light: #2c3e50;
     --success-color: #4CAF50;
     --warning-color: #FFC107;
     --error-color: #f44336;
     --info-color: #2196F3;
-    --shadow: 0 2px 5px rgba(0,0,0,0.3);
-    --shadow-strong: 0 4px 6px rgba(0,0,0,0.4);
+    --shadow: 0 2px 5px rgba(0,0,0,0.05);
+    --shadow-strong: 0 4px 6px rgba(0,0,0,0.1);
     --transition: all 0.3s ease;
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
+    --background-color: #ffffff;
+    --card-background: #f8f9fa;
+    --header-background: #ffffff;
+    --nav-background: #ffffff;
+    --toggle-bg: #ffffff;
+    --toggle-color: #2c3e50;
+    --toggle-border: #e9ecef;
+    --toggle-hover: #f8f9fa;
+    --border-color: #e9ecef;
 }
 
 * {
@@ -38,13 +47,14 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
     -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--light-color);
+    background-color: var(--background-color);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -71,14 +81,14 @@ p, li, span {
 }
 
 header {
-    background-color: var(--primary-dark);
+    background-color: var(--header-background);
     color: var(--text-on-dark);
     padding: var(--spacing-md);
     text-align: center;
     position: relative;
     z-index: 100;
     box-shadow: var(--shadow);
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .header-container {
@@ -97,7 +107,7 @@ header h1 {
     font-weight: 700;
     letter-spacing: -0.5px;
     line-height: 1.2;
-    color: var(--text-color);
+    color: var(--primary-color);
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
@@ -107,18 +117,18 @@ header h1 {
     font-weight: 400;
     max-width: 600px;
     margin: 0;
-    color: var(--text-color);
+    color: var(--text-color-light);
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 nav {
-    background-color: var(--dark-color);
+    background-color: var(--nav-background);
     padding: var(--spacing-sm);
     position: sticky;
     top: 0;
     z-index: 99;
     box-shadow: var(--shadow);
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .nav-container {
@@ -235,14 +245,13 @@ section h2 {
 }
 
 .stat-card {
-    background: white;
+    background-color: var(--card-background);
     padding: var(--spacing-lg);
     border-radius: 10px;
     text-align: center;
     box-shadow: var(--shadow);
     transition: var(--transition);
-    background-color: var(--dark-color-light);
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--border-color);
     box-shadow: var(--shadow-strong);
 }
 
@@ -268,13 +277,12 @@ section h2 {
 }
 
 .tip-card {
-    background: white;
+    background-color: var(--card-background);
     padding: var(--spacing-lg);
     border-radius: 10px;
     box-shadow: var(--shadow);
     transition: var(--transition);
-    background-color: var(--dark-color-light);
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--border-color);
     box-shadow: var(--shadow-strong);
 }
 
@@ -321,7 +329,7 @@ section h2 {
     border-radius: 5px;
     font-size: 1rem;
     transition: var(--transition);
-    background-color: var(--dark-color);
+    background-color: var(--card-background);
     color: var(--text-color);
 }
 
@@ -354,8 +362,8 @@ button:focus {
     margin-top: var(--spacing-lg);
     padding: var(--spacing-md);
     border-radius: 5px;
-    background-color: var(--dark-color-light);
-    border: 1px solid var(--primary-color);
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
 }
 
 .consumption-details {
@@ -398,12 +406,12 @@ button:focus {
 }
 
 footer {
-    background-color: var(--dark-color);
-    color: var(--text-on-dark);
+    background-color: var(--card-background);
+    color: var(--text-color);
     text-align: center;
     padding: var(--spacing-lg);
     margin-top: var(--spacing-xl);
-    border-top: 2px solid var(--primary-color);
+    border-top: 1px solid var(--border-color);
 }
 
 @media (min-width: 768px) {
@@ -541,19 +549,28 @@ footer {
     :root {
         --light-color: #1a1a1a;
         --light-color-dark: #2d2d2d;
-        --text-color: #f0f0f0;
-        --text-color-light: #b0b0b0;
+        --text-color: #ffffff;
+        --text-color-light: #b3b3b3;
         --shadow: 0 2px 5px rgba(0,0,0,0.3);
         --shadow-strong: 0 4px 6px rgba(0,0,0,0.4);
+        --background-color: #121212;
+        --card-background: #1e1e1e;
+        --header-background: #1a1a1a;
+        --nav-background: #2d2d2d;
+        --toggle-bg: #2d2d2d;
+        --toggle-color: #ffffff;
+        --toggle-border: #404040;
+        --toggle-hover: #404040;
+        --border-color: #333333;
     }
 
     body {
-        background-color: var(--light-color);
+        background-color: var(--background-color);
         color: var(--text-color);
     }
 
     .stat-card, .tip-card, .calculator-container {
-        background-color: var(--light-color-dark);
+        background-color: var(--card-background);
         color: var(--text-color);
     }
 
@@ -590,11 +607,11 @@ footer {
     }
 
     header {
-        background-color: var(--primary-dark);
+        background-color: var(--header-background);
     }
 
     nav {
-        background-color: var(--dark-color-light);
+        background-color: var(--nav-background);
     }
 
     nav a:hover,
@@ -645,8 +662,8 @@ section:target {
 [data-theme="dark"] {
     --light-color: #1a1a1a;
     --light-color-dark: #2d2d2d;
-    --text-color: #f0f0f0;
-    --text-color-light: #b0b0b0;
+    --text-color: #ffffff;
+    --text-color-light: #b3b3b3;
     --shadow: 0 2px 5px rgba(0,0,0,0.3);
     --shadow-strong: 0 4px 6px rgba(0,0,0,0.4);
 }
@@ -656,61 +673,61 @@ section:target {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+    margin-left: auto;
 }
 
 /* Theme toggle button */
 .theme-toggle {
-    background: none;
+    background: none !important;
     border: none;
-    padding: var(--spacing-sm);
     cursor: pointer;
-    color: var(--text-on-dark);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    padding: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition);
-    position: relative;
+    margin-left: 1rem;
+    width: 32px;
+    height: 32px;
+    color: var(--toggle-color);
 }
 
 .theme-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
+    background: none !important;
+    transform: none;
 }
 
 .theme-toggle:focus {
-    outline: 2px solid var(--text-on-dark);
-    outline-offset: 2px;
+    outline: none;
 }
 
-/* Theme icons */
 .theme-toggle .sun-icon,
 .theme-toggle .moon-icon {
-    position: absolute;
-    transition: var(--transition);
+    font-size: 1.4rem;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover .sun-icon,
+.theme-toggle:hover .moon-icon {
+    transform: scale(1.2) rotate(15deg);
 }
 
 .theme-toggle .sun-icon {
-    opacity: 1;
-    transform: scale(1);
+    display: none;
 }
 
 .theme-toggle .moon-icon {
-    opacity: 0;
-    transform: scale(0.5);
+    display: flex;
 }
 
-/* Dark theme icon states */
 [data-theme="dark"] .theme-toggle .sun-icon {
-    opacity: 0;
-    transform: scale(0.5);
+    display: flex;
 }
 
 [data-theme="dark"] .theme-toggle .moon-icon {
-    opacity: 1;
-    transform: scale(1);
+    display: none;
 }
 
 /* Media queries for theme toggle */
@@ -733,14 +750,14 @@ section:target {
 
 /* Dark theme styles */
 [data-theme="dark"] body {
-    background-color: var(--light-color);
+    background-color: var(--background-color);
     color: var(--text-color);
 }
 
 [data-theme="dark"] .stat-card,
 [data-theme="dark"] .tip-card,
 [data-theme="dark"] .calculator-container {
-    background-color: var(--light-color-dark);
+    background-color: var(--card-background);
     color: var(--text-color);
 }
 
@@ -778,11 +795,11 @@ section:target {
 }
 
 [data-theme="dark"] header {
-    background-color: var(--primary-dark);
+    background-color: var(--header-background);
 }
 
 [data-theme="dark"] nav {
-    background-color: var(--dark-color-light);
+    background-color: var(--nav-background);
 }
 
 [data-theme="dark"] nav a:hover,
@@ -835,17 +852,17 @@ section h2 {
 .stat-card,
 .tip-card,
 .calculator-container {
-    background-color: var(--dark-color-light);
-    border: 1px solid var(--primary-color);
-    box-shadow: var(--shadow-strong);
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
 }
 
 /* Amélioration des contrastes pour les inputs */
 .input-group select,
 .input-group input {
-    background-color: var(--dark-color);
+    background-color: var(--card-background);
     color: var(--text-color);
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--border-color);
 }
 
 .input-group label {
@@ -856,13 +873,15 @@ section h2 {
 /* Amélioration des contrastes pour les résultats */
 .result,
 .consumption-details {
-    background-color: var(--dark-color-light);
-    border: 1px solid var(--primary-color);
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
 }
 
 .advice {
     background-color: rgba(76, 175, 80, 0.1);
     border-left: 4px solid var(--primary-color);
+    color: var(--text-color);
 }
 
 .advice.warning {
@@ -872,14 +891,14 @@ section h2 {
 
 /* Amélioration du header */
 header {
-    background-color: var(--primary-dark);
-    border-bottom: 2px solid var(--primary-color);
+    background-color: var(--header-background);
+    border-bottom: 1px solid var(--border-color);
 }
 
 /* Amélioration de la navigation */
 nav {
-    background-color: var(--dark-color);
-    border-bottom: 2px solid var(--primary-color);
+    background-color: var(--nav-background);
+    border-bottom: 1px solid var(--border-color);
 }
 
 nav a {
@@ -895,20 +914,21 @@ nav a:focus {
 
 /* Amélioration du footer */
 footer {
-    background-color: var(--dark-color);
-    border-top: 2px solid var(--primary-color);
+    background-color: var(--card-background);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-color);
 }
 
 /* Suppression des styles de thème toggle */
-.theme-toggle,
+/* .theme-toggle,
 .theme-toggle .sun-icon,
 .theme-toggle .moon-icon {
     display: none;
-}
+} */
 
 .dangers-section {
     padding: 4rem 2rem;
-    background-color: var(--dark-color-light);
+    background-color: var(--card-background);
     margin: 2rem auto;
     border-radius: 10px;
     box-shadow: var(--shadow);
@@ -993,7 +1013,7 @@ footer {
 
 .simulation-section {
     padding: 4rem 2rem;
-    background-color: var(--dark-color-light);
+    background-color: var(--card-background);
     margin: 2rem auto;
     border-radius: 10px;
     box-shadow: var(--shadow);
@@ -1191,4 +1211,38 @@ footer {
         opacity: 0.8;
         transform: scale(calc(var(--pulse-scale) * 1.2));
     }
+}
+
+/* Styles spécifiques pour le thème clair */
+[data-theme="light"] {
+    --background-color: #ffffff;
+    --text-color: #2c3e50;
+    --text-color-light: #34495e;
+    --card-background: #f8f9fa;
+    --header-background: #ffffff;
+    --nav-background: #ffffff;
+    --shadow: 0 2px 5px rgba(0,0,0,0.05);
+    --shadow-strong: 0 4px 6px rgba(0,0,0,0.1);
+    --toggle-bg: #ffffff;
+    --toggle-color: #2c3e50;
+    --toggle-border: #e9ecef;
+    --toggle-hover: #f8f9fa;
+    --border-color: #e9ecef;
+}
+
+/* Styles spécifiques pour le thème sombre */
+[data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --text-color-light: #b3b3b3;
+    --card-background: #1e1e1e;
+    --header-background: #1a1a1a;
+    --nav-background: #2d2d2d;
+    --shadow: 0 2px 5px rgba(0,0,0,0.3);
+    --shadow-strong: 0 4px 6px rgba(0,0,0,0.4);
+    --toggle-bg: #2d2d2d;
+    --toggle-color: #ffffff;
+    --toggle-border: #404040;
+    --toggle-hover: #404040;
+    --border-color: #333333;
 } 
