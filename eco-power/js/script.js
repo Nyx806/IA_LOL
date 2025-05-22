@@ -141,6 +141,12 @@ function calculateConsumption() {
         return;
     }
 
+    let consumption;
+    let message;
+    let dailyCost;
+    let monthlyCost;
+    let yearlyCost;
+
     // Consommation en kWh par heure ou par cycle
     const consumptionRates = {
         fridge: 0.1, // 100W
@@ -155,15 +161,9 @@ function calculateConsumption() {
         dryer: 3.0, // 3000W par cycle
         coffee: 0.8, // 800W
         vacuum: 1.2, // 1200W
-        ai_training: 10.0, // 10kW par heure (moyenne pour l'entraînement d'un modèle)
-        ai_image: 2.0 // 2kW par heure (moyenne pour la génération d'images)
+        ai_training: 10.0, // 10kW par heure
+        ai_image: 2.0 // 2kW par heure
     };
-
-    let consumption;
-    let message;
-    let dailyCost;
-    let monthlyCost;
-    let yearlyCost;
 
     // Calcul de la consommation et des coûts
     if (['washing', 'dishwasher', 'dryer'].includes(appliance)) {
@@ -233,7 +233,7 @@ function calculateConsumption() {
             <p style="color: var(--dark-color);">${ecoScore.message}</p>
         </div>`;
 
-    // Conseils spécifiques pour chaque appareil
+    // Ajout de conseils personnalisés
     const adviceMap = {
         fridge: "Maintenez une température de 4°C et évitez de laisser la porte ouverte trop longtemps.",
         tv: "Activez le mode économie d'énergie et éteignez complètement l'appareil plutôt que de le laisser en veille.",
@@ -251,15 +251,8 @@ function calculateConsumption() {
         ai_image: "La génération d'images par IA est énergivore. Privilégiez les modèles optimisés et évitez les générations inutiles."
     };
 
-    // Ajout des conseils personnalisés
-    if (ecoScore.score < 40) {
-        message += '<div class="advice warning"><p>⚠️ Attention : Votre consommation est très élevée. Considérez des alternatives plus économiques.</p></div>';
-    } else if (ecoScore.score < 60) {
-        message += '<div class="advice warning"><p>⚠️ Votre consommation est élevée. Pensez à optimiser votre utilisation.</p></div>';
-    }
-
     message += `
-        <div class="advice">
+        <div class="advice" style="margin-top: 1.5rem; padding: 1rem; background-color: var(--light-color); border-radius: 10px;">
             <h4>Conseil :</h4>
             <p>${adviceMap[appliance]}</p>
         </div>`;
