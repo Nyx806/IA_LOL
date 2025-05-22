@@ -302,10 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Gestion de la navigation active
+// Gestion de la navigation et du défilement fluide
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
 
     // Fonction pour mettre à jour le lien actif
     function updateActiveLink() {
@@ -327,25 +327,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Écouter le défilement
-    window.addEventListener('scroll', updateActiveLink);
-    // Mettre à jour au chargement initial
-    updateActiveLink();
-
     // Gestion du clic sur les liens de navigation
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-                // Mettre à jour l'URL sans recharger la page
-                history.pushState(null, null, `#${targetId}`);
+            const href = link.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    // Mettre à jour l'URL sans recharger la page
+                    history.pushState(null, null, href);
+                }
             }
         });
     });
+
+    // Écouter le défilement pour mettre à jour le lien actif
+    window.addEventListener('scroll', updateActiveLink);
+    // Mettre à jour au chargement initial
+    updateActiveLink();
 });
 
 // Simulation de l'empreinte énergétique
@@ -388,28 +391,29 @@ document.addEventListener('DOMContentLoaded', function() {
         glacier.style.height = `${glacierHeight}px`;
         waterLevel.style.height = `${waterHeight}px`;
 
+        // Mettre à jour les comparaisons
+        const userConsumption = totalImpact;
+        const nationalAverage = 4.7; // kWh
+        const europeanAverage = 5.2; // kWh
+
+        // Mettre à jour les valeurs affichées
+        document.getElementById('user-consumption').textContent = `${userConsumption.toFixed(1)} kWh`;
+        document.getElementById('national-average').textContent = `${nationalAverage} kWh`;
+        document.getElementById('european-average').textContent = `${europeanAverage} kWh`;
+
         // Mettre à jour l'apparence du soleil en fonction de l'empreinte carbone
         const sun = document.querySelector('.sun');
-        const sunGlow = sun.querySelector('::before');
-        
-        // Calculer l'intensité du réchauffement (0 à 1)
         const warmingIntensity = Math.min(1, totalImpact / 50);
-        
-        // Calculer les couleurs en fonction de l'intensité
         const sunColor = `rgb(${255}, ${255 - warmingIntensity * 200}, ${0})`;
         const glowColor = `rgba(255, ${255 - warmingIntensity * 200}, 0, ${0.3 + warmingIntensity * 0.5})`;
         
-        // Mettre à jour les styles du soleil
         sun.style.background = `radial-gradient(circle, ${sunColor}, #FF4500)`;
         sun.style.boxShadow = `0 0 ${40 + warmingIntensity * 40}px ${sunColor}`;
         
-        // Mettre à jour l'animation du soleil
         const pulseScale = 1 + (warmingIntensity * 0.2);
         const pulseDuration = 4 - (warmingIntensity * 2);
         
         sun.style.animation = `sunPulse ${pulseDuration}s ease-in-out infinite`;
-        
-        // Mettre à jour le style du halo
         sun.style.setProperty('--glow-color', glowColor);
         sun.style.setProperty('--pulse-scale', pulseScale);
     }
