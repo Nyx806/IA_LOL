@@ -347,24 +347,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Gestion du thème
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    
-    // Fonction pour définir le thème
-    function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+// Simulation de l'empreinte énergétique
+document.addEventListener('DOMContentLoaded', function() {
+    const sliders = document.querySelectorAll('.slider');
+    const glacier = document.querySelector('.glacier');
+    const waterLevel = document.querySelector('.water-level');
+    const carbonFootprint = document.getElementById('carbon-footprint');
+    const seaLevel = document.getElementById('sea-level');
+
+    // Coefficients d'impact pour chaque type de consommation
+    const impactCoefficients = {
+        heating: 2.5,    // kg CO2 par heure
+        lighting: 0.8,   // kg CO2 par heure
+        appliances: 1.2, // kg CO2 par heure
+        transport: 0.15  // kg CO2 par km
+    };
+
+    function updateSimulation() {
+        let totalImpact = 0;
+        
+        // Calculer l'impact total
+        sliders.forEach(slider => {
+            const value = parseFloat(slider.value);
+            const coefficient = impactCoefficients[slider.id];
+            totalImpact += value * coefficient;
+        });
+
+        // Mettre à jour l'affichage
+        carbonFootprint.textContent = `${totalImpact.toFixed(1)} kg CO2`;
+        
+        // Calculer l'impact sur le niveau de la mer (1 kg CO2 = 0.1 cm)
+        const seaLevelRise = totalImpact * 0.1;
+        seaLevel.textContent = `${seaLevelRise.toFixed(1)} cm`;
+
+        // Mettre à jour la visualisation
+        const glacierHeight = Math.max(0, 200 - (totalImpact * 2));
+        const waterHeight = Math.min(250, totalImpact * 2);
+
+        glacier.style.height = `${glacierHeight}px`;
+        waterLevel.style.height = `${waterHeight}px`;
+
+        // Mettre à jour l'apparence du soleil en fonction de l'empreinte carbone
+        const sun = document.querySelector('.sun');
+        const sunGlow = sun.querySelector('::before');
+        
+        // Calculer l'intensité du réchauffement (0 à 1)
+        const warmingIntensity = Math.min(1, totalImpact / 50);
+        
+        // Calculer les couleurs en fonction de l'intensité
+        const sunColor = `rgb(${255}, ${255 - warmingIntensity * 200}, ${0})`;
+        const glowColor = `rgba(255, ${255 - warmingIntensity * 200}, 0, ${0.3 + warmingIntensity * 0.5})`;
+        
+        // Mettre à jour les styles du soleil
+        sun.style.background = `radial-gradient(circle, ${sunColor}, #FF4500)`;
+        sun.style.boxShadow = `0 0 ${40 + warmingIntensity * 40}px ${sunColor}`;
+        
+        // Mettre à jour l'animation du soleil
+        const pulseScale = 1 + (warmingIntensity * 0.2);
+        const pulseDuration = 4 - (warmingIntensity * 2);
+        
+        sun.style.animation = `sunPulse ${pulseDuration}s ease-in-out infinite`;
+        
+        // Mettre à jour le style du halo
+        sun.style.setProperty('--glow-color', glowColor);
+        sun.style.setProperty('--pulse-scale', pulseScale);
     }
 
-    // Récupérer le thème sauvegardé ou utiliser le thème clair par défaut
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
-
-    // Gérer le clic sur le bouton de thème
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
+    // Mettre à jour les valeurs affichées et la simulation
+    sliders.forEach(slider => {
+        const valueDisplay = slider.nextElementSibling;
+        
+        slider.addEventListener('input', function() {
+            valueDisplay.textContent = `${this.value}${this.id === 'transport' ? 'km' : 'h'}`;
+            updateSimulation();
+        });
     });
-}); 
+
+    // Initialiser la simulation
+    updateSimulation();
+});

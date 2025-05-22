@@ -57,6 +57,51 @@
         </div>
       </section>
 
+      <section id="simulation" class="simulation-section">
+        <h2>Simulation Interactive de votre Empreinte Énergétique</h2>
+        <div class="simulation-container">
+          <div class="simulation-form">
+            <div class="form-group">
+              <label for="heating">Chauffage (heures/jour)</label>
+              <input type="range" id="heating" min="0" max="24" value="8" class="slider">
+              <span class="value">8h</span>
+            </div>
+            <div class="form-group">
+              <label for="lighting">Éclairage (heures/jour)</label>
+              <input type="range" id="lighting" min="0" max="24" value="6" class="slider">
+              <span class="value">6h</span>
+            </div>
+            <div class="form-group">
+              <label for="appliances">Appareils électriques (heures/jour)</label>
+              <input type="range" id="appliances" min="0" max="24" value="4" class="slider">
+              <span class="value">4h</span>
+            </div>
+            <div class="form-group">
+              <label for="transport">Transport électrique (km/jour)</label>
+              <input type="range" id="transport" min="0" max="100" value="20" class="slider">
+              <span class="value">20km</span>
+            </div>
+          </div>
+          <div class="visualization-container">
+            <div class="glacier-container">
+              <div class="sun"></div>
+              <div class="glacier"></div>
+              <div class="water-level"></div>
+            </div>
+            <div class="impact-stats">
+              <div class="stat">
+                <h3>Empreinte Carbone</h3>
+                <p id="carbon-footprint">0 kg CO2</p>
+              </div>
+              <div class="stat">
+                <h3>Impact sur le Niveau de la Mer</h3>
+                <p id="sea-level">0 cm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="stats" class="stats">
         <h2>Le Saviez-vous ?</h2>
         <div class="stats-grid">

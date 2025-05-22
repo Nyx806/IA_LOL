@@ -989,4 +989,206 @@ footer {
     .danger-card p {
         font-size: 1rem;
     }
+}
+
+.simulation-section {
+    padding: 4rem 2rem;
+    background-color: var(--dark-color-light);
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    max-width: 1200px;
+    width: 90%;
+}
+
+.simulation-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.simulation-form {
+    background-color: var(--dark-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-strong);
+    border: 1px solid var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    background: var(--dark-color-light);
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 1rem 0;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--primary-light);
+}
+
+.value {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.visualization-container {
+    position: relative;
+    background-color: var(--dark-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-strong);
+    border: 1px solid var(--primary-color);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.glacier-container {
+    position: relative;
+    height: 250px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    border-radius: 8px;
+    background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+}
+
+.glacier {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+    clip-path: polygon(0% 100%, 20% 80%, 40% 90%, 60% 70%, 80% 85%, 100% 100%);
+    transition: height 0.5s ease;
+}
+
+.water-level {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    background: rgba(0, 0, 255, 0.3);
+    transition: height 0.5s ease;
+}
+
+.impact-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.impact-stats .stat {
+    background-color: var(--dark-color-light);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--primary-color);
+}
+
+.impact-stats h3 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.impact-stats p {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .simulation-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .visualization-container {
+        min-height: 350px;
+    }
+
+    .glacier-container {
+        height: 200px;
+    }
+
+    .impact-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sun {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 40px #FFD700;
+    animation: sunPulse 4s ease-in-out infinite;
+    z-index: 1;
+    --glow-color: rgba(255, 215, 0, 0.3);
+    --pulse-scale: 1;
+}
+
+.sun::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(circle, var(--glow-color), transparent 70%);
+    border-radius: 50%;
+    animation: sunGlow 4s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(var(--pulse-scale));
+    }
+}
+
+@keyframes sunGlow {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(calc(var(--pulse-scale) * 1.2));
+    }
 } 
