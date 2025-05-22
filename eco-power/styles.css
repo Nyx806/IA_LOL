@@ -184,4 +184,44 @@ footer {
     .stats-grid, .tips-container {
         grid-template-columns: 1fr;
     }
+}
+
+.consumption-details {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.consumption-details p {
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+}
+
+.consumption-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.consumption-details li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.consumption-details li:last-child {
+    border-bottom: none;
+}
+
+.advice {
+    background-color: var(--light-color);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.advice p {
+    margin: 0;
+    color: var(--dark-color);
 } 
