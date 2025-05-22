@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Éco-Power - Introduction</title>
-    <link rel="stylesheet" href="css/intro-styles.css">
+    <link rel="stylesheet" href="../css/intro-styles.css">
 </head>
 <body>
     <div class="background-overlay"></div>
@@ -15,13 +15,15 @@
         <button id="start-button" class="start-button">Commencer l'aventure</button>
     </main>
 
-    <div class="video-container">
-        <video id="intro-video" src="asset/video/Compte à rebours 10 secondes décompte libre de droits.mp4" autoplay></video>
+    <div class="video-container hidden">
+        <video id="intro-video" src="../asset/video/Compte à rebours 10 secondes décompte libre de droits.mp4"></video>
     </div>
 
     <script>
         document.getElementById('start-button').addEventListener('click', function() {
+            const videoContainer = document.querySelector('.video-container');
             const video = document.getElementById('intro-video');
+            videoContainer.classList.remove('hidden');
             video.play();
             video.addEventListener('ended', function() {
                 window.location.href = 'home.html';
