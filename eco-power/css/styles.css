@@ -1191,4 +1191,124 @@ footer {
         opacity: 0.8;
         transform: scale(calc(var(--pulse-scale) * 1.2));
     }
+}
+
+/* Styles pour la section de comparaison */
+.comparison-section {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--dark-color-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-strong);
+    border: 1px solid var(--primary-color);
+}
+
+.comparison-section h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.comparison-card {
+    background-color: var(--dark-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--shadow-strong);
+    border: 1px solid var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.comparison-card:hover {
+    transform: translateY(-5px);
+}
+
+.comparison-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.comparison-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.comparison-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px;
+    padding: 1rem;
+    background-color: var(--dark-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-strong);
+    border: 1px solid var(--primary-color);
+    position: relative;
+}
+
+.comparison-chart::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 95%, var(--primary-color) 95%);
+    pointer-events: none;
+}
+
+.chart-bar {
+    width: 30%;
+    background-color: var(--primary-color);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 0.5s ease;
+    min-height: 4px;
+}
+
+.chart-bar.user-bar {
+    background-color: var(--primary-color);
+}
+
+.chart-bar.national-bar {
+    background-color: var(--secondary-color);
+}
+
+.chart-bar.european-bar {
+    background-color: var(--accent-color);
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .comparison-chart {
+        height: 150px;
+    }
+
+    .bar-label {
+        font-size: 0.8rem;
+    }
 } 
