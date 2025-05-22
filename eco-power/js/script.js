@@ -302,10 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Gestion de la navigation active
+// Gestion de la navigation et du défilement fluide
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
 
     // Fonction pour mettre à jour le lien actif
     function updateActiveLink() {
@@ -327,25 +327,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Écouter le défilement
-    window.addEventListener('scroll', updateActiveLink);
-    // Mettre à jour au chargement initial
-    updateActiveLink();
-
     // Gestion du clic sur les liens de navigation
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-                // Mettre à jour l'URL sans recharger la page
-                history.pushState(null, null, `#${targetId}`);
+            const href = link.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    // Mettre à jour l'URL sans recharger la page
+                    history.pushState(null, null, href);
+                }
             }
         });
     });
+
+    // Écouter le défilement pour mettre à jour le lien actif
+    window.addEventListener('scroll', updateActiveLink);
+    // Mettre à jour au chargement initial
+    updateActiveLink();
 });
 
 // Simulation de l'empreinte énergétique
