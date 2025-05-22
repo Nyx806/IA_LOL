@@ -904,4 +904,89 @@ footer {
 .theme-toggle .sun-icon,
 .theme-toggle .moon-icon {
     display: none;
+}
+
+.dangers-section {
+    padding: 4rem 2rem;
+    background-color: var(--dark-color-light);
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    max-width: 1000px;
+    width: 90%;
+}
+
+.dangers-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.dangers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.danger-card {
+    background-color: var(--dark-color);
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-strong);
+    border: 1px solid var(--primary-color);
+    transition: transform 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.danger-card:hover {
+    transform: translateY(-5px);
+}
+
+.danger-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.danger-card p {
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .dangers-section {
+        padding: 3rem 1rem;
+        width: 95%;
+    }
+
+    .dangers-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0;
+    }
+
+    .danger-card {
+        padding: 2rem;
+    }
+
+    .danger-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .danger-card p {
+        font-size: 1rem;
+    }
 } 
