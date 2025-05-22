@@ -47,14 +47,6 @@ const applianceConsumption = {
     vacuum: {
         base: 1.2,    // kWh par heure
         description: "Consommation par heure d'utilisation"
-    },
-    ai: {
-        base: 0.5,    // kWh par heure
-        description: "Consommation par heure d'utilisation"
-    },
-    ai_image: {
-        base: 0.8,    // kWh par génération
-        description: "Consommation par génération d'image"
     }
 };
 
@@ -216,42 +208,6 @@ function calculateConsumption() {
                     </ul>
                 </div>`;
             break;
-
-        case 'ai':
-            consumption = applianceData.base * hours;
-            dailyCost = consumption * kWhPrice;
-            monthlyCost = dailyCost * 30;
-            yearlyCost = dailyCost * 365;
-            message = `
-                <div class="consumption-details">
-                    <p>Votre utilisation d'IA consomme environ ${consumption.toFixed(2)} kWh pour ${hours} heures d'utilisation</p>
-                    <p>Coûts estimés :</p>
-                    <ul>
-                        <li>Par jour : ${dailyCost.toFixed(2)}€</li>
-                        <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
-                        <li>Par an : ${yearlyCost.toFixed(2)}€</li>
-                    </ul>
-                </div>`;
-            break;
-
-        case 'ai_image':
-            const imagesPerHour = 4; // Estimation moyenne d'images générées par heure
-            const imagesPerDay = imagesPerHour * hours;
-            consumption = applianceData.base * imagesPerDay;
-            dailyCost = consumption * kWhPrice;
-            monthlyCost = dailyCost * 30;
-            yearlyCost = dailyCost * 365;
-            message = `
-                <div class="consumption-details">
-                    <p>La génération d'images par IA consomme environ ${consumption.toFixed(2)} kWh pour ${imagesPerDay} images générées</p>
-                    <p>Coûts estimés :</p>
-                    <ul>
-                        <li>Par jour : ${dailyCost.toFixed(2)}€</li>
-                        <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
-                        <li>Par an : ${yearlyCost.toFixed(2)}€</li>
-                    </ul>
-                </div>`;
-            break;
     }
 
     // Calcul du score écologique
@@ -298,10 +254,6 @@ function calculateConsumption() {
         advice += '<div class="advice"><p>💡 Conseil : Débranchez la machine à café après utilisation pour éviter la consommation en veille.</p></div>';
     } else if (appliance === 'vacuum') {
         advice += '<div class="advice"><p>💡 Conseil : Nettoyez régulièrement les filtres pour optimiser l\'efficacité de l\'aspirateur.</p></div>';
-    } else if (appliance === 'ai') {
-        advice += '<div class="advice"><p>💡 Conseil : Optimisez vos requêtes IA et évitez les sessions prolongées inutiles. Utilisez des modèles plus légers quand c\'est possible.</p></div>';
-    } else if (appliance === 'ai_image') {
-        advice += '<div class="advice"><p>💡 Conseil : Regroupez vos demandes de génération d\'images pour réduire le nombre de sessions. Utilisez des résolutions plus basses quand c\'est possible.</p></div>';
     }
 
     resultDiv.innerHTML = message + advice;
@@ -321,9 +273,7 @@ function getApplianceName(appliance) {
         'heater': 'chauffage',
         'dryer': 'sèche-linge',
         'coffee': 'machine à café',
-        'vacuum': 'aspirateur',
-        'ai': 'intelligence artificielle',
-        'ai_image': 'IA générative d\'images'
+        'vacuum': 'aspirateur'
     };
     return names[appliance] || appliance;
 }
