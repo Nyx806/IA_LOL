@@ -3,56 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éco-Power - Galerie d'Images</title>
-    <link rel="icon" href="../asset/img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/home-styles.css">
+    <title>Éco-Power - Accueil</title>
+    <link rel="stylesheet" href="css/home-styles.css">
+    <style>
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: var(--shadow-strong);
+            border: 1px solid var(--primary-color);
+            background-color: var(--dark-color-light);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1rem;
+            color: var(--text-color);
+        }
+
+        .gallery-item h3 {
+            margin: 0;
+            color: var(--primary-color);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .gallery-item p {
+            margin: 0.5rem 0 0;
+            font-size: 0.9rem;
+            color: var(--text-color-light);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-on-dark);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 2rem auto;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .cta-container {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark-color-light);
+            border-top: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--text-color);
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-color);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Éco-Power</h1>
-        <p class="tagline">Visualisez l'impact de notre consommation électrique</p>
+        <div class="header-container">
+            <h1>Éco-Power</h1>
+            <div class="header-right">
+                <p class="tagline">Chaque watt compte pour un avenir plus vert</p>
+            </div>
+        </div>
     </header>
 
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="home.html">Accueil</a></li>
+                <li><a href="index.html">Calculateur</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <main>
-        <section class="gallery-intro">
-            <h2>L'Énergie en Images</h2>
-            <p>Découvrez une collection d'images générées par IA illustrant l'importance de l'optimisation énergétique</p>
+        <section class="hero-section">
+            <h1>Bienvenue sur Éco-Power</h1>
+            <p>Découvrez comment optimiser votre consommation électrique pour un avenir plus durable</p>
         </section>
 
         <section class="gallery">
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Énergie renouvelable">
-                    <div class="overlay">
-                        <p>Énergies renouvelables</p>
-                    </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Énergie renouvelable">
+                <div class="overlay">
+                    <h3>Énergie Renouvelable</h3>
+                    <p>L'avenir de l'énergie est vert</p>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Consommation électrique">
-                    <div class="overlay">
-                        <p>Consommation responsable</p>
-                    </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Économie d'énergie">
+                <div class="overlay">
+                    <h3>Économie d'Énergie</h3>
+                    <p>Des solutions simples pour réduire sa consommation</p>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Économie d'énergie">
-                    <div class="overlay">
-                        <p>Économies d'énergie</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Innovation énergétique">
-                    <div class="overlay">
-                        <p>Innovation énergétique</p>
-                    </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Développement durable">
+                <div class="overlay">
+                    <h3>Développement Durable</h3>
+                    <p>Agir aujourd'hui pour demain</p>
                 </div>
             </div>
         </section>
 
-        <section class="cta-section">
-            <h2>Prêt à agir ?</h2>
-            <p>Découvrez nos conseils et outils pour optimiser votre consommation électrique</p>
-            <a href="../index.html" class="cta-button">Explorer nos solutions</a>
-        </section>
+        <div class="cta-container">
+            <a href="../index.html" class="cta-button">Calculer ma consommation</a>
+        </div>
     </main>
 
     <footer>

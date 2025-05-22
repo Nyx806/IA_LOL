@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éco-Power - Bienvenue</title>
-    <link rel="icon" href="../asset/img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/intro-styles.css">
+    <title>Éco-Power - Introduction</title>
+    <link rel="stylesheet" href="css/intro-styles.css">
 </head>
 <body>
     <div class="background-overlay"></div>
@@ -13,26 +12,19 @@
     <main class="intro-content">
         <h1>Éco-Power</h1>
         <p class="subtitle">Ensemble pour un avenir plus vert</p>
-        <button id="startButton" class="start-button">Commencer l'aventure</button>
+        <button id="start-button" class="start-button">Commencer l'aventure</button>
     </main>
 
-    <div id="videoContainer" class="video-container hidden">
-        <video id="transitionVideo" class="transition-video">
-            <source src="assets/video/Compte à rebours 10 secondes décompte libre de droits.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos.
-        </video>
+    <div class="video-container">
+        <video id="intro-video" src="asset/video/Compte à rebours 10 secondes décompte libre de droits.mp4" autoplay></video>
     </div>
 
     <script>
-        document.getElementById('startButton').addEventListener('click', function() {
-            const videoContainer = document.getElementById('videoContainer');
-            const video = document.getElementById('transitionVideo');
-            
-            videoContainer.classList.remove('hidden');
+        document.getElementById('start-button').addEventListener('click', function() {
+            const video = document.getElementById('intro-video');
             video.play();
-            
             video.addEventListener('ended', function() {
-                window.location.href = 'pages/home.html';
+                window.location.href = 'home.html';
             });
         });
     </script>
