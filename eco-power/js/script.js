@@ -141,73 +141,85 @@ function calculateConsumption() {
         return;
     }
 
-    const applianceData = applianceConsumption[appliance];
+    // Consommation en kWh par heure ou par cycle
+    const consumptionRates = {
+        fridge: 0.1, // 100W
+        tv: 0.15, // 150W
+        computer: 0.2, // 200W
+        washing: 1.5, // 1500W par cycle
+        dishwasher: 1.2, // 1200W par cycle
+        microwave: 1.0, // 1000W
+        oven: 2.0, // 2000W
+        aircon: 1.5, // 1500W
+        heater: 2.0, // 2000W
+        dryer: 3.0, // 3000W par cycle
+        coffee: 0.8, // 800W
+        vacuum: 1.2, // 1200W
+        ai_training: 10.0, // 10kW par heure (moyenne pour l'entraînement d'un modèle)
+        ai_image: 2.0 // 2kW par heure (moyenne pour la génération d'images)
+    };
+
     let consumption;
     let message;
     let dailyCost;
     let monthlyCost;
     let yearlyCost;
 
-    switch (appliance) {
-        case 'fridge':
-            consumption = applianceData.base;
-            dailyCost = consumption * kWhPrice;
-            monthlyCost = dailyCost * 30;
-            yearlyCost = dailyCost * 365;
-            message = `
-                <div class="consumption-details">
-                    <p>Votre réfrigérateur consomme environ ${consumption.toFixed(2)} kWh par jour</p>
-                    <p>Coûts estimés :</p>
-                    <ul>
-                        <li>Par jour : ${dailyCost.toFixed(2)}€</li>
-                        <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
-                        <li>Par an : ${yearlyCost.toFixed(2)}€</li>
-                    </ul>
-                </div>`;
-            break;
+    // Calcul de la consommation et des coûts
+    if (['washing', 'dishwasher', 'dryer'].includes(appliance)) {
+        consumption = consumptionRates[appliance];
+        dailyCost = consumption * kWhPrice;
+        monthlyCost = dailyCost * 30;
+        yearlyCost = dailyCost * 365;
+        message = `
+            <div class="consumption-details">
+                <p>Votre ${getApplianceName(appliance)} consomme environ ${consumption.toFixed(2)} kWh par cycle</p>
+                <p>Coûts estimés :</p>
+                <ul>
+                    <li>Par cycle : ${dailyCost.toFixed(2)}€</li>
+                    <li>Par mois (30 cycles) : ${monthlyCost.toFixed(2)}€</li>
+                    <li>Par an (365 cycles) : ${yearlyCost.toFixed(2)}€</li>
+                </ul>
+            </div>`;
+    } else if (appliance === 'fridge') {
+        consumption = consumptionRates[appliance] * 24; // Consommation journalière
+        dailyCost = consumption * kWhPrice;
+        monthlyCost = dailyCost * 30;
+        yearlyCost = dailyCost * 365;
+        message = `
+            <div class="consumption-details">
+                <p>Votre réfrigérateur consomme environ ${consumption.toFixed(2)} kWh par jour</p>
+                <p>Coûts estimés :</p>
+                <ul>
+                    <li>Par jour : ${dailyCost.toFixed(2)}€</li>
+                    <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
+                    <li>Par an : ${yearlyCost.toFixed(2)}€</li>
+                </ul>
+            </div>`;
+    } else {
+        consumption = consumptionRates[appliance] * hours;
+        dailyCost = consumption * kWhPrice;
+        monthlyCost = dailyCost * 30;
+        yearlyCost = dailyCost * 365;
+        message = `
+            <div class="consumption-details">
+                <p>Votre ${getApplianceName(appliance)} consomme environ ${consumption.toFixed(2)} kWh pour ${hours} heures d'utilisation</p>
+                <p>Coûts estimés :</p>
+                <ul>
+                    <li>Par jour : ${dailyCost.toFixed(2)}€</li>
+                    <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
+                    <li>Par an : ${yearlyCost.toFixed(2)}€</li>
+                </ul>
+            </div>`;
+    }
 
-        case 'tv':
-        case 'computer':
-        case 'microwave':
-        case 'oven':
-        case 'aircon':
-        case 'heater':
-        case 'coffee':
-        case 'vacuum':
-            consumption = applianceData.base * hours;
-            dailyCost = consumption * kWhPrice;
-            monthlyCost = dailyCost * 30;
-            yearlyCost = dailyCost * 365;
-            message = `
-                <div class="consumption-details">
-                    <p>Votre ${getApplianceName(appliance)} consomme environ ${consumption.toFixed(2)} kWh pour ${hours} heures d'utilisation</p>
-                    <p>Coûts estimés :</p>
-                    <ul>
-                        <li>Par jour : ${dailyCost.toFixed(2)}€</li>
-                        <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
-                        <li>Par an : ${yearlyCost.toFixed(2)}€</li>
-                    </ul>
-                </div>`;
-            break;
-
-        case 'washing':
-        case 'dishwasher':
-        case 'dryer':
-            consumption = applianceData.base;
-            dailyCost = consumption * kWhPrice;
-            monthlyCost = dailyCost * 30;
-            yearlyCost = dailyCost * 365;
-            message = `
-                <div class="consumption-details">
-                    <p>Votre ${getApplianceName(appliance)} consomme environ ${consumption.toFixed(2)} kWh par cycle</p>
-                    <p>Coûts estimés :</p>
-                    <ul>
-                        <li>Par cycle : ${dailyCost.toFixed(2)}€</li>
-                        <li>Par mois (30 cycles) : ${monthlyCost.toFixed(2)}€</li>
-                        <li>Par an (365 cycles) : ${yearlyCost.toFixed(2)}€</li>
-                    </ul>
-                </div>`;
-            break;
+    // Détails supplémentaires pour l'IA
+    if (appliance.startsWith('ai_')) {
+        const aiDetails = {
+            ai_training: "L'entraînement d'un modèle d'IA peut consommer jusqu'à 10kW par heure selon la complexité du modèle et la taille du dataset. Cette consommation inclut le refroidissement des serveurs et l'infrastructure du datacenter.",
+            ai_image: "La génération d'images par IA consomme environ 2kW par heure, incluant le traitement GPU et le refroidissement des serveurs. La consommation varie selon la résolution et la complexité des images."
+        };
+        message += `<p class="ai-details">${aiDetails[appliance]}</p>`;
     }
 
     // Calcul du score écologique
@@ -221,42 +233,38 @@ function calculateConsumption() {
             <p style="color: var(--dark-color);">${ecoScore.message}</p>
         </div>`;
 
-    // Ajout de conseils personnalisés
-    let advice = '';
+    // Conseils spécifiques pour chaque appareil
+    const adviceMap = {
+        fridge: "Maintenez une température de 4°C et évitez de laisser la porte ouverte trop longtemps.",
+        tv: "Activez le mode économie d'énergie et éteignez complètement l'appareil plutôt que de le laisser en veille.",
+        computer: "Utilisez le mode économie d'énergie et éteignez l'écran quand vous ne l'utilisez pas.",
+        washing: "Lavez à froid quand c'est possible et remplissez complètement la machine.",
+        dishwasher: "Utilisez le mode éco et remplissez complètement le lave-vaisselle.",
+        microwave: "Préférez le micro-ondes au four pour les petits plats.",
+        oven: "Évitez d'ouvrir la porte pendant la cuisson et utilisez la chaleur tournante.",
+        aircon: "Maintenez une différence de température raisonnable avec l'extérieur (max 8°C).",
+        heater: "Réglez le thermostat à 19°C maximum et baissez la température la nuit.",
+        dryer: "Préférez le séchage à l'air libre quand c'est possible.",
+        coffee: "Éteignez la machine après utilisation et détartrez-la régulièrement.",
+        vacuum: "Nettoyez régulièrement les filtres pour maintenir l'efficacité.",
+        ai_training: "L'entraînement d'un modèle d'IA dans un datacenter consomme beaucoup d'énergie. Considérez l'utilisation de modèles pré-entraînés ou l'optimisation des hyperparamètres pour réduire la consommation.",
+        ai_image: "La génération d'images par IA est énergivore. Privilégiez les modèles optimisés et évitez les générations inutiles."
+    };
+
+    // Ajout des conseils personnalisés
     if (ecoScore.score < 40) {
-        advice = '<div class="advice warning"><p>⚠️ Attention : Votre consommation est très élevée. Considérez des alternatives plus économiques.</p></div>';
+        message += '<div class="advice warning"><p>⚠️ Attention : Votre consommation est très élevée. Considérez des alternatives plus économiques.</p></div>';
     } else if (ecoScore.score < 60) {
-        advice = '<div class="advice warning"><p>⚠️ Votre consommation est élevée. Pensez à optimiser votre utilisation.</p></div>';
+        message += '<div class="advice warning"><p>⚠️ Votre consommation est élevée. Pensez à optimiser votre utilisation.</p></div>';
     }
 
-    // Ajout des conseils spécifiques à l'appareil
-    if (consumption > 2) {
-        advice += '<div class="advice"><p>💡 Conseil : Pensez à débrancher l\'appareil quand il n\'est pas utilisé pour réduire sa consommation en veille.</p></div>';
-    } else if (appliance === 'fridge') {
-        advice += '<div class="advice"><p>💡 Conseil : Assurez-vous que votre réfrigérateur est bien dégivré et que les joints sont en bon état.</p></div>';
-    } else if (appliance === 'tv') {
-        advice += '<div class="advice"><p>💡 Conseil : Activez le mode économie d\'énergie de votre téléviseur et réduisez la luminosité.</p></div>';
-    } else if (appliance === 'computer') {
-        advice += '<div class="advice"><p>💡 Conseil : Utilisez le mode économie d\'énergie et éteignez votre ordinateur quand vous ne l\'utilisez pas.</p></div>';
-    } else if (appliance === 'washing' || appliance === 'dishwasher') {
-        advice += '<div class="advice"><p>💡 Conseil : Privilégiez les cycles courts et le lavage à froid pour réduire la consommation.</p></div>';
-    } else if (appliance === 'oven') {
-        advice += '<div class="advice"><p>💡 Conseil : Utilisez le four à chaleur tournante et évitez d\'ouvrir la porte pendant la cuisson.</p></div>';
-    } else if (appliance === 'aircon') {
-        advice += '<div class="advice"><p>💡 Conseil : Réglez la température à 26°C maximum et fermez les fenêtres pendant l\'utilisation.</p></div>';
-    } else if (appliance === 'heater') {
-        advice += '<div class="advice"><p>💡 Conseil : Réglez le thermostat à 19°C maximum et isolez bien votre logement.</p></div>';
-    } else if (appliance === 'dryer') {
-        advice += '<div class="advice"><p>💡 Conseil : Utilisez le sèche-linge uniquement quand nécessaire et privilégiez le séchage à l\'air libre.</p></div>';
-    } else if (appliance === 'microwave') {
-        advice += '<div class="advice"><p>💡 Conseil : Le micro-ondes consomme moins que le four traditionnel pour réchauffer les aliments.</p></div>';
-    } else if (appliance === 'coffee') {
-        advice += '<div class="advice"><p>💡 Conseil : Débranchez la machine à café après utilisation pour éviter la consommation en veille.</p></div>';
-    } else if (appliance === 'vacuum') {
-        advice += '<div class="advice"><p>💡 Conseil : Nettoyez régulièrement les filtres pour optimiser l\'efficacité de l\'aspirateur.</p></div>';
-    }
+    message += `
+        <div class="advice">
+            <h4>Conseil :</h4>
+            <p>${adviceMap[appliance]}</p>
+        </div>`;
 
-    resultDiv.innerHTML = message + advice;
+    resultDiv.innerHTML = message;
 }
 
 // Fonction pour obtenir le nom en français de l'appareil
@@ -426,3 +434,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialiser la simulation
     updateSimulation();
 });
+
+// Mise à jour des valeurs des sliders
+document.querySelectorAll('.slider').forEach(slider => {
+    slider.addEventListener('input', function() {
+        this.nextElementSibling.textContent = this.value + (this.id === 'transport' ? 'km' : 'h');
+        updateVisualization();
+    });
+});
+
+function updateVisualization() {
+    const heating = parseInt(document.getElementById('heating').value);
+    const lighting = parseInt(document.getElementById('lighting').value);
+    const appliances = parseInt(document.getElementById('appliances').value);
+    const transport = parseInt(document.getElementById('transport').value);
+
+    // Calcul de l'empreinte carbone (en kg CO2)
+    const carbonFootprint = (heating * 0.5) + (lighting * 0.2) + (appliances * 0.3) + (transport * 0.4);
+    document.getElementById('carbon-footprint').textContent = carbonFootprint.toFixed(1) + ' kg CO2';
+
+    // Calcul de l'impact sur le niveau de la mer (en cm)
+    const seaLevelRise = carbonFootprint * 0.1;
+    document.getElementById('sea-level').textContent = seaLevelRise.toFixed(2) + ' cm';
+
+    // Mise à jour de la visualisation
+    const waterLevel = document.querySelector('.water-level');
+    const glacier = document.querySelector('.glacier');
+    const sun = document.querySelector('.sun');
+
+    // Ajustement du niveau d'eau (max 80% de la hauteur)
+    waterLevel.style.height = (seaLevelRise * 2) + '%';
+    
+    // Ajustement de la hauteur du glacier
+    glacier.style.height = (200 - seaLevelRise * 2) + 'px';
+
+    // Ajustement de l'apparence du soleil en fonction de l'empreinte carbone
+    const intensity = Math.min(carbonFootprint / 50, 1); // Normalisé entre 0 et 1
+    sun.style.setProperty('--glow-color', `rgba(255, 215, 0, ${0.3 + intensity * 0.5})`);
+    sun.style.setProperty('--pulse-scale', 1 + intensity * 0.2);
+}
