@@ -47,6 +47,14 @@ const applianceConsumption = {
     vacuum: {
         base: 1.2,    // kWh par heure
         description: "Consommation par heure d'utilisation"
+    },
+    ai: {
+        base: 0.5,    // kWh par heure
+        description: "Consommation par heure d'utilisation"
+    },
+    ai_image: {
+        base: 0.8,    // kWh par génération
+        description: "Consommation par génération d'image"
     }
 };
 
@@ -208,6 +216,42 @@ function calculateConsumption() {
                     </ul>
                 </div>`;
             break;
+
+        case 'ai':
+            consumption = applianceData.base * hours;
+            dailyCost = consumption * kWhPrice;
+            monthlyCost = dailyCost * 30;
+            yearlyCost = dailyCost * 365;
+            message = `
+                <div class="consumption-details">
+                    <p>Votre utilisation d'IA consomme environ ${consumption.toFixed(2)} kWh pour ${hours} heures d'utilisation</p>
+                    <p>Coûts estimés :</p>
+                    <ul>
+                        <li>Par jour : ${dailyCost.toFixed(2)}€</li>
+                        <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
+                        <li>Par an : ${yearlyCost.toFixed(2)}€</li>
+                    </ul>
+                </div>`;
+            break;
+
+        case 'ai_image':
+            const imagesPerHour = 4; // Estimation moyenne d'images générées par heure
+            const imagesPerDay = imagesPerHour * hours;
+            consumption = applianceData.base * imagesPerDay;
+            dailyCost = consumption * kWhPrice;
+            monthlyCost = dailyCost * 30;
+            yearlyCost = dailyCost * 365;
+            message = `
+                <div class="consumption-details">
+                    <p>La génération d'images par IA consomme environ ${consumption.toFixed(2)} kWh pour ${imagesPerDay} images générées</p>
+                    <p>Coûts estimés :</p>
+                    <ul>
+                        <li>Par jour : ${dailyCost.toFixed(2)}€</li>
+                        <li>Par mois : ${monthlyCost.toFixed(2)}€</li>
+                        <li>Par an : ${yearlyCost.toFixed(2)}€</li>
+                    </ul>
+                </div>`;
+            break;
     }
 
     // Calcul du score écologique
@@ -254,6 +298,10 @@ function calculateConsumption() {
         advice += '<div class="advice"><p>💡 Conseil : Débranchez la machine à café après utilisation pour éviter la consommation en veille.</p></div>';
     } else if (appliance === 'vacuum') {
         advice += '<div class="advice"><p>💡 Conseil : Nettoyez régulièrement les filtres pour optimiser l\'efficacité de l\'aspirateur.</p></div>';
+    } else if (appliance === 'ai') {
+        advice += '<div class="advice"><p>💡 Conseil : Optimisez vos requêtes IA et évitez les sessions prolongées inutiles. Utilisez des modèles plus légers quand c\'est possible.</p></div>';
+    } else if (appliance === 'ai_image') {
+        advice += '<div class="advice"><p>💡 Conseil : Regroupez vos demandes de génération d\'images pour réduire le nombre de sessions. Utilisez des résolutions plus basses quand c\'est possible.</p></div>';
     }
 
     resultDiv.innerHTML = message + advice;
@@ -273,7 +321,9 @@ function getApplianceName(appliance) {
         'heater': 'chauffage',
         'dryer': 'sèche-linge',
         'coffee': 'machine à café',
-        'vacuum': 'aspirateur'
+        'vacuum': 'aspirateur',
+        'ai': 'intelligence artificielle',
+        'ai_image': 'IA générative d\'images'
     };
     return names[appliance] || appliance;
 }
@@ -298,5 +348,73 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'all 0.5s ease-out';
         observer.observe(card);
+    });
+});
+
+// Gestion de la navigation active
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+
+    // Fonction pour mettre à jour le lien actif
+    function updateActiveLink() {
+        const scrollPosition = window.scrollY;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+
+    // Écouter le défilement
+    window.addEventListener('scroll', updateActiveLink);
+    // Mettre à jour au chargement initial
+    updateActiveLink();
+
+    // Gestion du clic sur les liens de navigation
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                // Mettre à jour l'URL sans recharger la page
+                history.pushState(null, null, `#${targetId}`);
+            }
+        });
+    });
+});
+
+// Gestion du thème
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    // Fonction pour définir le thème
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }
+
+    // Récupérer le thème sauvegardé ou utiliser le thème clair par défaut
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+
+    // Gérer le clic sur le bouton de thème
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
     });
 }); 
