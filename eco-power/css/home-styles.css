@@ -25,6 +25,9 @@ header {
     text-align: center;
     padding: 2rem 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header h1 {
@@ -143,6 +146,7 @@ footer {
     color: white;
     margin-top: 3rem;
 }
+
 
 @media (max-width: 768px) {
     main {
